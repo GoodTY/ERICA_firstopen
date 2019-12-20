@@ -8,6 +8,9 @@ pygame.init()
 
 screen = pygame.display.set_mode((800, 600))
 
+#background Image
+background = pygame.image.load('background.png')
+
 # Title and Icon
 pygame.display.set_caption("Catching Bananas")
 icon = pygame.image.load('monkey.png')
@@ -37,7 +40,7 @@ while running:
 
 	# 빨강 초록 파랑
 	screen.fill((0,0,0))
-
+	screen.blit(background, (0,0))
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
@@ -62,7 +65,7 @@ while running:
 	# Enemy Movement
 	enemyY += enemyY_change
 
-	if enemyX >= 736:
+	if enemyY >= 736:
 		enemyY_change = -0.3
 		enemyY += enemyY_change
 
