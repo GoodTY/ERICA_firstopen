@@ -29,6 +29,16 @@ while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
-
-	player()
+		# if keastroke is pressed check whether its right or left
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_RIGHT:
+				playerX_change = 0.2
+			if event.key == pygame.K_LEFT:
+				playerX_change = -0.2
+		if event.type == pygame.KEYUP:
+			if event.type == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+				playerX_change = 0
+	
+	playerX += playerX_change
+	player(playerX, playerY)
 	pygame.display.update()
