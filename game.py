@@ -22,8 +22,8 @@ playerX_change = 0
 # Enemy
 enemyImg = pygame.image.load('banana.png')
 enemyX = random.randint(0, 800) 
-enemyY = random.randint(50, 150)
-enemyY_change = 0
+enemyY = 0
+enemyY_change = 0.3
 
 def player(x,y):
 	screen.blit(playerImg, (x, y))
@@ -50,13 +50,22 @@ while running:
 		if event.type == pygame.KEYUP:
 			if event.type == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 				playerX_change = 0
-	
+
+	# Enemy Movement
 	playerX += playerX_change
+
 	if playerX <= 0:
 		playerX = 0
-	elif playerX >=736:
+	elif playerX >= 736:
 		playerX = 736
-	
+
+	# Enemy Movement
+	enemyY += enemyY_change
+
+	if enemyX >= 736:
+		enemyY_change = -0.3
+		enemyY += enemyY_change
+
 	player(playerX, playerY)
 	enemy(enemyX, enemyY)
 	pygame.display.update()
