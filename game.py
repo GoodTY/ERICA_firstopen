@@ -15,6 +15,16 @@ pygame.display.set_caption("Catching Bananas")
 icon = pygame.image.load('monkey.png')
 pygame.display.set_icon(icon)
 
+# Score
+score_value = 0
+font = pygame.font.Font('OpenSans-Regular.ttf',32)
+
+textX = 10
+textY = 10
+
+def show_score(x, y):
+	score = font.render("Score :" + str(score_value),True, (255,255,255))
+	screen.blit(score, (x, y))
 # Player
 playerImg = pygame.image.load('basket.png')
 playerX = 370
@@ -86,8 +96,11 @@ while running:
 		if collision:
 			enemyX[i] = random.randint(0, 735)
 			enemyY[i] = 0
-
+			score += 1
 		enemy(enemyX[i], enemyY[i], i)
 
+
+
 	player(playerX, playerY)
+	show_score(textX, textY)
 	pygame.display.update()
