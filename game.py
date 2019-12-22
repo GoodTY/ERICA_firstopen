@@ -39,16 +39,17 @@ playerX_change = 0
 
 
 # Banana
-num_of_bananas = random.randint(2,3)
-bananaImg = []
-bananaX = []
-bananaY = []
-bananaY_change = []
+num_of_bananas = random.randint(2,4)
 for i in range(num_of_bananas):
-	bananaImg.append(pygame.image.load('banana.png'))
-	bananaX.append(random.randint(0, 736)) 
-	bananaY.append(random.randint(0,70))
-	bananaY_change.append(0)
+	bananaImg = []
+	bananaX = []
+	bananaY = []
+	bananaY_change = []
+	for j in range(num_of_bananas):
+		bananaImg.append(pygame.image.load('banana.png'))
+		bananaX.append(random.randint(0, 736)) 
+		bananaY.append(random.randint(0,70))
+		bananaY_change.append(0)
 
 # bomb
 bombImg = pygame.image.load('bomb.png')
@@ -94,10 +95,6 @@ def game_over_text():
 # Game Loop
 running = True
 while running:
-	fps_clock = pygame.time.Clock()
-	FPS = 60
-	fps_clock.tick(FPS)
-
 	# 빨강 초록 파랑
 	screen.fill((0,0,0))
 	screen.blit(background, (0,0))
@@ -117,9 +114,8 @@ while running:
 				playerX_change = 0
 
 	# bomb Movement
-
-	bombY_change = 4
 	bombY += bombY_change
+	bombY_change = 4
 
 	# Player Movement
 	playerX += playerX_change
@@ -159,10 +155,11 @@ while running:
 				bananaY[j] = 2000
 				bombY = 2000
 			game_over_text()
-
+			break
 		#not collision bomb
 		if bombY > 600:
-			bombY_change = 4
+			
+			bombY_change = 4		
 			bombX = random.randint(0, 736)
 			bombY = 0
 			bombY += bombY_change
