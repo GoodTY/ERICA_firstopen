@@ -40,16 +40,15 @@ playerX_change = 0
 
 # Banana
 num_of_bananas = random.randint(2,3)
+bananaImg = []
+bananaX = []
+bananaY = []
+bananaY_change = []
 for i in range(num_of_bananas):
-	bananaImg = []
-	bananaX = []
-	bananaY = []
-	bananaY_change = []
-	for j in range(num_of_bananas):
-		bananaImg.append(pygame.image.load('banana.png'))
-		bananaX.append(random.randint(0, 736)) 
-		bananaY.append(random.randint(0,100))
-		bananaY_change.append(0)
+	bananaImg.append(pygame.image.load('banana.png'))
+	bananaX.append(random.randint(0, 736)) 
+	bananaY.append(random.randint(0,70))
+	bananaY_change.append(0)
 
 # bomb
 bombImg = pygame.image.load('bomb.png')
@@ -74,6 +73,14 @@ def isCollision1(bananaX, bananaY, playerX, playerY):
 		return True
 	else:
 		return False
+
+def isCollision2(bombX, bombY, playerX, playerY):
+	distance = math.sqrt((math.pow(bombX-playerX,2)) + (math.pow(bombY - playerY,2)))
+	if distance < 27:
+		return True
+	else:
+		return False
+
 
 def show_score(x, y):
 	score = font.render(' Score : ' + str(score_value), True, (255,255,255))
@@ -110,8 +117,8 @@ while running:
 				playerX_change = 0
 
 	# bomb Movement
-	bombY += bombY_change
-	bombY_change = 3
+
+	bombY_change = 4
 	bombY += bombY_change
 
 	# Player Movement
@@ -129,6 +136,7 @@ while running:
 		if bananaY[i] > 600:
 			for j in range(num_of_bananas):
 				bananaY[j] = 2000
+				bombY = 2000
 			game_over_text()
 			break
 
@@ -136,13 +144,29 @@ while running:
 			bananaY_change[i] = random.randint(1,6)
 			bananaY[i] += bananaY_change[i]
 	
-		# Collision
-		collision = isCollision1(bananaX[i], bananaY[i], playerX, playerY)
-		if collision:
-			bananaX[i] = random.randint(0, 735)
-			bananaY[i] = 0
+		# Collision  banana player
+		collision1 = isCollision1(bananaX[i], bananaY[i], playerX, playerY)
+		if collision1:
+			bananaX[i] = random.randint(0, 736)
+			bananaY[i] = random.randint(0, 100)
 			score_value += 1
 		banana(bananaX[i], bananaY[i], i)
+
+		# Collision bomb player
+		collision2 = isCollision2(bombX, bombY, playerX, playerY)
+		if collision2:
+			for j in range(num_of_bananas):
+				bananaY[j] = 2000
+				bombY = 2000
+			game_over_text()
+
+		#not collision bomb
+		if bombY > 600:
+			bombY_change = 4
+			bombX = random.randint(0, 736)
+			bombY = 0
+			bombY += bombY_change
+		bomb(bombX, bombY)
 
 	player(playerX, playerY)
 	bomb(bombX, bombY)
