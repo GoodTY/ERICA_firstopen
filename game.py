@@ -2,7 +2,6 @@ import pygame
 import random
 import math
 from pygame import mixer
-from time import sleep
 
 pygame.init()
 
@@ -20,7 +19,6 @@ pygame.display.set_icon(icon)
 # Font
 score_value = 0
 font = pygame.font.Font('OpenSans-Regular.ttf',32)
-
 textX = 10
 textY = 10
 
@@ -48,15 +46,15 @@ for i in range(num_of_bananas):
 	for j in range(num_of_bananas):
 		bananaImg.append(pygame.image.load('banana.png'))
 		bananaX.append(random.randint(0, 736)) 
-		bananaY.append(random.randint(0,70))
-		bananaY_change.append(0)
+		bananaY.append(random.randint(0, 200))
+		bananaY_change.append(1)
 
 # bomb
 bombImg = pygame.image.load('bomb.png')
 bombX = random.randint(0, 736)
 bombY = 0
 bombX_change = 0
-bombY_change = -2
+bombY_change = 0
 
 def bomb(x, y):
 	screen.blit(bombImg, (x, y))
@@ -68,7 +66,7 @@ def banana(x, y, i):
 	screen.blit(bananaImg[i], (x, y))
 
 def isCollision1(bananaX, bananaY, playerX, playerY):
-	distance = math.sqrt((math.pow(bananaX-playerX,2)) + (math.pow(bananaY - playerY,2)))
+	distance = math.sqrt((math.pow(bananaX - playerX, 2)) + (math.pow(bananaY - playerY,2)))
 	
 	if distance < 27:
 		return True
@@ -76,7 +74,7 @@ def isCollision1(bananaX, bananaY, playerX, playerY):
 		return False
 
 def isCollision2(bombX, bombY, playerX, playerY):
-	distance = math.sqrt((math.pow(bombX-playerX,2)) + (math.pow(bombY - playerY,2)))
+	distance = math.sqrt((math.pow(bombX - playerX, 2)) + (math.pow(bombY - playerY, 2)))
 	if distance < 27:
 		return True
 	else:
@@ -95,7 +93,7 @@ def game_over_text():
 # Game Loop
 running = True
 while running:
-	# 빨강 초록 파랑
+	# color
 	screen.fill((0,0,0))
 	screen.blit(background, (0,0))
 	for event in pygame.event.get():
@@ -104,9 +102,9 @@ while running:
 		# if keastroke is pressed check whether its right or left
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_RIGHT:
-				playerX_change = 25
+				playerX_change = 30
 			if event.key == pygame.K_LEFT:
-				playerX_change = -25
+				playerX_change = -30
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT:
 				playerX_change = 0
@@ -125,26 +123,25 @@ while running:
 	elif playerX >= 736:
 		playerX = 736
 
-	# Enemy Movement
+	# Bnanas Movement
 	for i in range(num_of_bananas):
-		
 	#Game over
-		if bananaY[i] > 600:
+		if bananaY[i] >= 600:
 			for j in range(num_of_bananas):
 				bananaY[j] = 2000
-				bombY = 2000
+			bombY = 2000
 			game_over_text()
 			break
 
 		if bananaY[i] <= 600:
-			bananaY_change[i] = random.randint(1,6)
+			bananaY_change[i] = random.randint(1,10)
 			bananaY[i] += bananaY_change[i]
 	
 		# Collision  banana player
 		collision1 = isCollision1(bananaX[i], bananaY[i], playerX, playerY)
 		if collision1:
 			bananaX[i] = random.randint(0, 736)
-			bananaY[i] = random.randint(0, 100)
+			bananaY[i] = random.randint(0, 50)
 			score_value += 1
 		banana(bananaX[i], bananaY[i], i)
 
@@ -153,13 +150,12 @@ while running:
 		if collision2:
 			for j in range(num_of_bananas):
 				bananaY[j] = 2000
-				bombY = 2000
+			bombY = 2000
 			game_over_text()
 			break
 		#not collision bomb
-		if bombY > 600:
-			
-			bombY_change = 4		
+		if bombY > 600:	
+			bombY_change = 10		
 			bombX = random.randint(0, 736)
 			bombY = 0
 			bombY += bombY_change
