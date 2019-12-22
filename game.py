@@ -48,8 +48,18 @@ for i in range(num_of_bananas):
 	for j in range(num_of_bananas):
 		bananaImg.append(pygame.image.load('banana.png'))
 		bananaX.append(random.randint(0, 736)) 
-		bananaY.append(random.randint(0,80))
+		bananaY.append(random.randint(0,100))
 		bananaY_change.append(0)
+
+# bomb
+bombImg = pygame.image.load('bomb.png')
+bombX = random.randint(0, 736)
+bombY = 0
+bombX_change = 0
+bombY_change = -2
+
+def bomb(x, y):
+	screen.blit(bombImg, (x, y))
 
 def player(x, y):
 	screen.blit(playerImg, (x, y))
@@ -57,7 +67,7 @@ def player(x, y):
 def banana(x, y, i):
 	screen.blit(bananaImg[i], (x, y))
 
-def isCollision(bananaX, bananaY, playerX, playerY):
+def isCollision1(bananaX, bananaY, playerX, playerY):
 	distance = math.sqrt((math.pow(bananaX-playerX,2)) + (math.pow(bananaY - playerY,2)))
 	
 	if distance < 27:
@@ -77,6 +87,10 @@ def game_over_text():
 # Game Loop
 running = True
 while running:
+	fps_clock = pygame.time.Clock()
+	FPS = 60
+	fps_clock.tick(FPS)
+
 	# 빨강 초록 파랑
 	screen.fill((0,0,0))
 	screen.blit(background, (0,0))
@@ -86,14 +100,20 @@ while running:
 		# if keastroke is pressed check whether its right or left
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_RIGHT:
-				playerX_change = 20
+				playerX_change = 25
 			if event.key == pygame.K_LEFT:
-				playerX_change = -20
+				playerX_change = -25
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT:
 				playerX_change = 0
 			elif event.key == pygame.K_LEFT:
 				playerX_change = 0
+
+	# bomb Movement
+	bombY += bombY_change
+	bombY_change = 3
+	bombY += bombY_change
+
 	# Player Movement
 	playerX += playerX_change
 
@@ -115,18 +135,16 @@ while running:
 		if bananaY[i] <= 600:
 			bananaY_change[i] = random.randint(1,6)
 			bananaY[i] += bananaY_change[i]
-
+	
 		# Collision
-		collision = isCollision(bananaX[i], bananaY[i], playerX, playerY)
+		collision = isCollision1(bananaX[i], bananaY[i], playerX, playerY)
 		if collision:
 			bananaX[i] = random.randint(0, 735)
 			bananaY[i] = 0
 			score_value += 1
 		banana(bananaX[i], bananaY[i], i)
 
-
 	player(playerX, playerY)
+	bomb(bombX, bombY)
 	show_score(textX, textY)
 	pygame.display.update()
-	clock = pygame.time.Clock()
-	clock.tick(60)
