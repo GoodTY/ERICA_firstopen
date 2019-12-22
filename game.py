@@ -75,9 +75,10 @@ while running:
 			if event.key == pygame.K_LEFT:
 				playerX_change = -10
 		if event.type == pygame.KEYUP:
-			if event.type == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+			if event.key == pygame.K_RIGHT:
 				playerX_change = 0
-
+			elif event.key == pygame.K_LEFT:
+				playerX_change = 0
 	# Player Movement
 	playerX += playerX_change
 
