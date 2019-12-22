@@ -10,6 +10,8 @@ python 기반 pygame을 사용
 
 
 # 게임 설명
+**python3 game.py** 로 게임 실행!
+
 ![banana](https://user-images.githubusercontent.com/55177919/71321728-3e619900-2501-11ea-8034-6d2a32526e68.png)  하늘에서 떨어지는 바나나를 **하나도 흘리지 말고 먹여야한다!** 흘리면 Game Over!  
 바나나는 게임 시작시 2 ~ 4 개 **랜덤**으로 생성  
 ![bomb](https://user-images.githubusercontent.com/55177919/71321733-4ae5f180-2501-11ea-9638-220b04329146.png)
