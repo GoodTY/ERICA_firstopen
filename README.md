@@ -12,7 +12,7 @@ python 기반 pygame을 사용
 **폭탄**을 먹을시 Game Over!
 
 # 출처
-**BOMB** : FLATICON https://www.flaticon.com/free-icon/bomb_123979
-**banana** : FLATICON https://www.flaticon.com/free-icon/banana_714197?term=banana&page=1&position=16
-**BGM** : FESLIYANSTUDIOS https://www.fesliyanstudios.com/royalty-free-music/download/snap-along/333
-**basket**
+**BOMB** : FLATICON https://www.flaticon.com/free-icon/bomb_123979  
+**banana** : FLATICON https://www.flaticon.com/free-icon/banana_714197?term=banana&page=1&position=16  
+**basket** : FLATICON https://www.flaticon.com/free-icon/wicker-basket_1685513?term=basket&page=1&position=76
+**BGM** : FESLIYANSTUDIOS https://www.fesliyanstudios.com/royalty-free-music/download/snap-along/333  
