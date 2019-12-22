@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 from pygame import mixer
+from time import sleep
 
 pygame.init()
 
@@ -36,19 +37,19 @@ playerX = 370
 playerY = 480
 playerX_change = 0
 
+
 # Banana
-bananaImg = []
-bananaX = []
-bananaY = []
-bananaY_change = []
-num_of_bananas = random.randint(2,5)
-
+num_of_bananas = random.randint(2,3)
 for i in range(num_of_bananas):
-	bananaImg.append(pygame.image.load('banana.png'))
-	bananaX.append(random.randint(0, 736)) 
-	bananaY.append(random.randint(0,20))
-	bananaY_change.append(5)
-
+	bananaImg = []
+	bananaX = []
+	bananaY = []
+	bananaY_change = []
+	for j in range(num_of_bananas):
+		bananaImg.append(pygame.image.load('banana.png'))
+		bananaX.append(random.randint(0, 736)) 
+		bananaY.append(random.randint(0,80))
+		bananaY_change.append(0)
 
 def player(x, y):
 	screen.blit(playerImg, (x, y))
@@ -85,9 +86,9 @@ while running:
 		# if keastroke is pressed check whether its right or left
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_RIGHT:
-				playerX_change = 15
+				playerX_change = 20
 			if event.key == pygame.K_LEFT:
-				playerX_change = -15
+				playerX_change = -20
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_RIGHT:
 				playerX_change = 0
@@ -112,7 +113,7 @@ while running:
 			break
 
 		if bananaY[i] <= 600:
-			bananaY_change[i] = random.randint(1, 5)
+			bananaY_change[i] = random.randint(1,6)
 			bananaY[i] += bananaY_change[i]
 
 		# Collision
@@ -127,3 +128,5 @@ while running:
 	player(playerX, playerY)
 	show_score(textX, textY)
 	pygame.display.update()
+	clock = pygame.time.Clock()
+	clock.tick(60)
