@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+from pygame import mixer
 
 pygame.init()
 
@@ -22,8 +23,12 @@ font = pygame.font.Font('OpenSans-Regular.ttf',32)
 textX = 10
 textY = 10
 
+# Background Sound
+mixer.music.load('bgm.mp3')
+mixer.music.play(-1)
+
 def show_score(x, y):
-	score = font.render("Score :" + str(score_value),True, (255,255,255))
+	score = font.render("Score : " + str(score_value), True, (255,255,255))
 	screen.blit(score, (x, y))
 # Player
 playerImg = pygame.image.load('basket.png')
@@ -97,7 +102,7 @@ while running:
 		if collision:
 			enemyX[i] = random.randint(0, 735)
 			enemyY[i] = 0
-			score += 1
+			score_value += 1
 		enemy(enemyX[i], enemyY[i], i)
 
 
