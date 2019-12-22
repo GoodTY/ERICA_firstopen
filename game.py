@@ -16,20 +16,20 @@ pygame.display.set_caption("Catching Bananas")
 icon = pygame.image.load('monkey.png')
 pygame.display.set_icon(icon)
 
-# Score
+# Font
 score_value = 0
 font = pygame.font.Font('OpenSans-Regular.ttf',32)
 
 textX = 10
 textY = 10
 
+# Game over text
+over_font = pygame.font.Font('OpenSans-Regular.ttf', 64)
+
 # Background Sound
 mixer.music.load('bgm.mp3')
 mixer.music.play(-1)
 
-def show_score(x, y):
-	score = font.render("Score : " + str(score_value), True, (255,255,255))
-	screen.blit(score, (x, y))
 # Player
 playerImg = pygame.image.load('basket.png')
 playerX = 370
@@ -41,13 +41,13 @@ enemyImg = []
 enemyX = []
 enemyY = []
 enemyY_change = []
-num_of_enemies = 6
+num_of_enemies = random.randint(2,10)
 
 for i in range(num_of_enemies):
 	enemyImg.append(pygame.image.load('banana.png'))
-	enemyX.append(random.randint(0, 800)) 
+	enemyX.append(random.randint(0, 736)) 
 	enemyY.append(0)
-	enemyY_change.append(5)
+	enemyY_change.append(20)
 
 
 def player(x,y):
@@ -63,6 +63,15 @@ def isCollision(enemyX, enemyY, playerX, playerY):
 		return True
 	else:
 		return False
+
+def show_score(x, y):
+	score = font.render(' Score : ' + str(score_value), True, (255,255,255))
+	screen.blit(score, (x, y))
+
+def game_over_text():
+	over_text = over_font.render( "GAME OVER", True, (255,255,255))
+	screen.blit(over_text, (200, 255))
+
 
 # Game Loop
 running = True
@@ -94,6 +103,14 @@ while running:
 
 	# Enemy Movement
 	for i in range(num_of_enemies):
+		
+	#Game over
+		if enemyY[i] > 200:
+			for j in range(num_of_enemies):
+				enemyY[j] = 2000
+			game_over_text()
+			break
+
 		if enemyY[i] <= 736:
 			enemyY_change[i] = 1
 			enemyY[i] += enemyY_change[i]
